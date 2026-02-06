@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Camille 💕</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Georgia', serif;
+    background: linear-gradient(135deg, #fdecef, #f7f3e9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.card {
+    background: #ffffffcc;
+    padding: 45px 55px;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0 20px 45px rgba(0,0,0,0.12);
+    backdrop-filter: blur(6px);
+    position: relative;
+    width: 340px;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #a0525c;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.15rem;
+    color: #5a4a42;
+    margin-bottom: 35px;
+}
+
+.buttons {
+    position: relative;
+    height: 90px;
+}
+
+button {
+    font-size: 1.1rem;
+    padding: 14px 30px;
+    border-radius: 35px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.25s ease;
+}
+
+#yes {
+    background: #f4a7b9;
+    color: white;
+    box-shadow: 0 6px 18px rgba(244,167,185,0.6);
+}
+
+#no {
+    background: #ddd;
+    color: #555;
+    position: absolute;
+    left: 180px;
+    top: 0;
+}
+
+/* éléments qui tombent */
+.fall {
+    position: fixed;
+    top: -30px;
+    font-size: 24px;
+    animation: fall linear forwards;
+    pointer-events: none;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>Camille</h1>
+    <p>
+        <strong>Veux-tu être ma Valentine ?</strong> 💕
+    </p>
+
+    <div class="buttons">
+        <button id="yes">Oui 🥰</button>
+        <button id="no">Non 😵</button>
+    </div>
+</div>
+
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const buttons = document.querySelector(".buttons");
+
+let yesScale = 1;
+
+function moveNoButton() {
+    const maxX = buttons.offsetWidth - noBtn.offsetWidth;
+    const maxY = buttons.offsetHeight - noBtn.offsetHeight;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    yesScale += 0.08;
+    yesBtn.style.transform = `scale(${yesScale})`;
+}
+
+noBtn.addEventListener("mouseenter", moveNoButton);
+noBtn.addEventListener("touchstart", moveNoButton);
+
+function createFall() {
+    const items = ["💖", "🌸", "💕", "🌷", "🎉"];
+    const el = document.createElement("div");
+    el.className = "fall";
+    el.innerText = items[Math.floor(Math.random() * items.length)];
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.animationDuration = 2 + Math.random() * 2 + "s";
+    document.body.appendChild(el);
+
+    setTimeout(() => el.remove(), 4000);
+}
+
+yesBtn.addEventListener("click", () => {
+    setInterval(createFall, 200);
+
+    document.querySelector(".card").innerHTML = `
+        <h1>💖</h1>
+        <p style="font-size:1.4rem;">
+            Je savais que tu dirais oui…<br><br>
+			Sois prête Samedi à 21h :) <br><br>        
+			Bisous
+            💕
+        </p>
+    `;
+});
+</script>
+
+</body>
+</html>
